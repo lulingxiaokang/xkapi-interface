@@ -1,10 +1,10 @@
 package com.llxk.xkapiinterface.controller;
 
-import com.llxk.xkapiinterface.model.User;
-import com.llxk.xkapiinterface.utils.SignUtils;
+import com.llxk.xkapiclientsdk.model.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 /**
  * ClassName: NameController
@@ -18,24 +18,25 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/name")
 public class NameController {
-    @GetMapping("/")
+    @GetMapping("/get")
     public String getNameByGet(String name){
 
         return "GET:你的名字是" + name;
     }
 
-    @PostMapping("/")
+    @PostMapping("/post")
     public String getNameByPost(@RequestParam String name){
         return "POST:你的名字是" + name;
     }
 
     @PostMapping("/user")
-    public String getNameByPost(@RequestBody User user, HttpServletRequest request){
-        String accessKey = request.getHeader("accessKey");
+    public String getNameByPost(@RequestBody User user, HttpServletRequest request) throws UnsupportedEncodingException {
+        /*String accessKey = request.getHeader("accessKey");
         String nonce = request.getHeader("nonce");
         String timestamp = request.getHeader("timestamp");
         String sign = request.getHeader("sign");
-        String body = request.getHeader("body");
+        String body = URLDecoder.decode(request.getHeader("body"), "utf-8");
+
         //TODO 实际情况应该是数据库中查是否已分配给用户
         if(!"llxk".equals(accessKey)){
             throw new RuntimeException("无权限");
@@ -46,15 +47,19 @@ public class NameController {
         }
 
         //TODO 时间和当前时间不能超过5分钟
-        /*if(timestamp){
+        *//*if(timestamp){
 
-        }*/
+        }*//*
         //TODO 实际需要从数据库中查出secretKey
         String serverSign = SignUtils.getSign(body, "abcdefgh");
         if(!sign.equals(serverSign)){
             throw new RuntimeException("无权限");
-        }
-        return "Post: 用户名是" + user.getUsername();
+        }*/
+
+        String result = "Post: 用户名是" + user.getUsername();
+        //调用成功后
+
+        return result;
     }
 
 
